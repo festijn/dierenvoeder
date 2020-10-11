@@ -1,0 +1,71 @@
+#include <Servo.h>
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+
+//Authenticator code voor Online verbinding
+char auth[] = "fSeILY03CWHKCpIfYR624Uds5WxtzK_0";
+
+//WIFI Credentials
+char ssid[] = "IOT";
+char pass[] = "!HVAIOT!";
+
+//Maakt van de servo een object
+Servo servoVoer;
+
+//Maakt van de knop een constante
+const int buttonPin = D2;
+
+//Maak van de speaker in integer
+int speakerPin = D8;
+
+//Variabele aanmaken om de positie van de Servo te bewaren
+int posServo = 0;
+
+
+void setup()
+{
+//Verbind met Blynk server
+ Blynk.begin(auth, ssid, pass);
+ 
+//Debug voor de knop en servo 
+  Serial.begin(115200);
+
+  //Servo meteen op startpositie zetten
+  servoVoer.write(0);
+
+  //Servo attachen
+  servoVoer.attach(D1);
+
+  //De servo als output instellen
+  pinMode(D1, OUTPUT);
+
+  //De fysieke knop als input instellen
+  pinMode(buttonPin, INPUT_PULLUP);
+  
+}
+
+//Variabele aanmaken of de knop aan of uit is
+int oldButtonState = 0;
+
+void loop()
+{
+  //Leest of de knop ingedrukt is
+  int buttonState = digitalRead(buttonPin);
+
+  //Opent de voedselklep zodra er op de fysieke knop is gedrukt of de Blynk knop
+  if (buttonState == HIGH && oldButtonState == LOW )
+  {
+
+    servoVoer.write(80); //Opent de klep
+    Blynk.notify("Hey, je dier heeft eten gehad. Hoera!");
+
+    //Laat de voedselklep 10 seconden openstaan
+    delay(10000);
+
+    //Sluit de voedselklep zodat de voedselstroom stopt
+    servoVoer.write(0);
+  }
+  
+
+  oldButtonState = buttonState;
+  }
