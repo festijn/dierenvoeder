@@ -3,7 +3,7 @@
 #include <BlynkSimpleEsp8266.h>
 
 //Authenticator code voor Online verbinding
-char auth[] = "fSeILY03CWHKCpIfYR624Uds5WxtzK_0";
+char auth[] = "VUL HIER BLYNK AUTHENTICATIE CODE IN";
 
 //WIFI Credentials
 char ssid[] = "IOT";
