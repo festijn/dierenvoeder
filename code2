@@ -53,7 +53,7 @@ void loop()
   int buttonState = digitalRead(buttonPin);
 
   //Opent de voedselklep zodra er op de fysieke knop is gedrukt of de Blynk knop
-  if (buttonState == HIGH && oldButtonState == LOW )
+  if (buttonState == LOW && oldButtonState == HIGH )
   {
 
     servoVoer.write(80); //Opent de klep
@@ -70,4 +70,4 @@ void loop()
   oldButtonState = buttonState;
   }
   
-  https://imgur.com/a/fq3HtjT
+
